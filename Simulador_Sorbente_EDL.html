@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador de Degradación del Sorbente EDL</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #F8F9FA; color: #2C2C2A; line-height: 1.5; padding: 32px 16px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  header { margin-bottom: 24px; border-bottom: 3px solid #1D9E75; padding-bottom: 16px; }
+  h1 { font-size: 25px; color: #0F6E56; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { font-size: 14px; color: #5F5E5A; }
+  .author { font-size: 13px; color: #0F6E56; font-weight: 700; margin-top: 6px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  @media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
+  .card { background: white; border: 1px solid #E0DED6; border-radius: 12px; padding: 18px 20px; }
+  .slabel { font-size: 12px; font-weight: 700; color: #5F5E5A; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 14px; }
+  .ctrl { margin-bottom: 16px; }
+  .ctrl:last-child { margin-bottom: 0; }
+  .crow { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+  .clabel { font-size: 13px; color: #5F5E5A; }
+  .cval { font-size: 14px; font-weight: 700; color: #2C2C2A; }
+  input[type=range] { width: 100%; height: 6px; border-radius: 3px; background: #E0DED6; outline: none; -webkit-appearance: none; appearance: none; cursor: pointer; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #1D9E75; cursor: pointer; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+  input[type=range]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: #1D9E75; cursor: pointer; border: 2px solid white; }
+  .mgrid { display: grid; gap: 12px; }
+  .metric { background: #F1EFE8; border-radius: 8px; padding: 12px 14px; }
+  .metric.danger { background: #FCEBEB; }
+  .mlabel { font-size: 12px; color: #5F5E5A; margin-bottom: 4px; }
+  .mval { font-size: 22px; font-weight: 700; color: #2C2C2A; }
+  .metric.danger .mval { color: #A32D2D; }
+  .msub { font-size: 11px; color: #888780; margin-top: 2px; }
+  .note { font-size: 12px; color: #854F0B; background: #FAEEDA; border-radius: 8px; padding: 12px 14px; margin-top: 16px; }
+  footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid #E0DED6; font-size: 11px; color: #888780; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Simulador de Degradación del Sorbente EDL</h1>
+    <p class="subtitle">Análisis del costo real oculto en proyectos de extracción directa de litio · Herramienta de due diligence</p>
+    <p class="author">Desarrollado por Ricardo Ferrón</p>
+  </header>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="slabel">Parámetros del sorbente</p>
+      <div class="ctrl"><div class="crow"><span class="clabel">Precio del sorbente (USD/kg)</span><span class="cval" id="v-precio">$500</span></div><input type="range" id="precio" min="200" max="800" step="50" value="500"></div>
+      <div class="ctrl"><div class="crow"><span class="clabel">Masa de sorbente (toneladas)</span><span class="cval" id="v-masa">10 t</span></div><input type="range" id="masa" min="2" max="50" step="1" value="10"></div>
+      <div class="ctrl"><div class="crow"><span class="clabel">Vida útil (ciclos)</span><span class="cval" id="v-vida">400</span></div><input type="range" id="vida" min="100" max="1000" step="50" value="400"></div>
+      <div class="ctrl"><div class="crow"><span class="clabel">Ciclos por día</span><span class="cval" id="v-ciclos">3</span></div><input type="range" id="ciclos" min="1" max="6" step="1" value="3"></div>
+    </div>
+    <div class="card">
+      <p class="slabel">Parámetros de operación</p>
+      <div class="ctrl"><div class="crow"><span class="clabel">Umbral de reemplazo (%)</span><span class="cval" id="v-umbral">70%</span></div><input type="range" id="umbral" min="50" max="85" step="5" value="70"></div>
+      <div class="ctrl"><div class="crow"><span class="clabel">Producción diaria (t LCE)</span><span class="cval" id="v-prod">55</span></div><input type="range" id="prod" min="20" max="100" step="5" value="55"></div>
+      <div class="ctrl"><div class="crow"><span class="clabel">Precio litio (USD/t)</span><span class="cval" id="v-litio">$12.000</span></div><input type="range" id="litio" min="8000" max="25000" step="500" value="12000"></div>
+      <div class="ctrl"><div class="crow"><span class="clabel">Horizonte (años)</span><span class="cval" id="v-horizonte">8</span></div><input type="range" id="horizonte" min="3" max="15" step="1" value="8"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="slabel">El costo real que el vendedor no muestra</p>
+    <div class="mgrid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="metric"><p class="mlabel">Vida útil</p><p class="mval" id="r-vida">4,4</p><p class="msub">meses por carga</p></div>
+      <div class="metric"><p class="mlabel">Reemplazos</p><p class="mval" id="r-reemplazos">21</p><p class="msub">en el horizonte</p></div>
+      <div class="metric"><p class="mlabel">Recuperación real</p><p class="mval" id="r-recup">78%</p><p class="msub">promedio (vs 92%)</p></div>
+      <div class="metric danger"><p class="mlabel">Sobrecosto/t</p><p class="mval" id="r-sobrecosto">$2.897</p><p class="msub">USD por t LCE</p></div>
+    </div>
+    <div class="mgrid" style="grid-template-columns: 1fr 1fr; margin-top: 12px;">
+      <div class="metric"><p class="mlabel">Costo total en sorbentes</p><p class="mval" id="r-costo-sorb">$110M</p><p class="msub">USD acumulado</p></div>
+      <div class="metric danger"><p class="mlabel">Costo oculto total</p><p class="mval" id="r-costo-total">$396M</p><p class="msub">sorbente + litio perdido</p></div>
+    </div>
+    <div class="note"><strong>Nota metodológica:</strong> Modelo de degradación lineal de primera aproximación. La degradación real puede seguir curvas más complejas según el tipo de sorbente y la química de la salmuera. El valor está en visibilizar un costo que normalmente queda oculto. Rangos basados en PatSnap y RFF (2025): sorbentes $200-800/kg, vida útil 200-500 ciclos, degradación 20-40% en 100-200 ciclos.</div>
+  </div>
+
+  <footer>Herramienta de due diligence para inversión en EDL · Desarrollada por Ricardo Ferrón · Datos: PatSnap, RFF, ENAMI 2025</footer>
+</div>
+
+<script>
+  const fmt = new Intl.NumberFormat('es-CL');
+  const ids = ['precio','masa','vida','ciclos','umbral','prod','litio','horizonte'];
+  const els = {}; ids.forEach(id => els[id] = document.getElementById(id));
+
+  function compute() {
+    const precio = +els.precio.value;
+    const masaKg = +els.masa.value * 1000;
+    const vida = +els.vida.value;
+    const ciclosDia = +els.ciclos.value;
+    const umbral = +els.umbral.value / 100;
+    const prodDia = +els.prod.value;
+    const litio = +els.litio.value;
+    const horizonte = +els.horizonte.value;
+
+    document.getElementById('v-precio').textContent = '$' + precio;
+    document.getElementById('v-masa').textContent = (masaKg/1000) + ' t';
+    document.getElementById('v-vida').textContent = vida;
+    document.getElementById('v-ciclos').textContent = ciclosDia;
+    document.getElementById('v-umbral').textContent = (umbral*100).toFixed(0) + '%';
+    document.getElementById('v-prod').textContent = prodDia;
+    document.getElementById('v-litio').textContent = '$' + fmt.format(litio);
+    document.getElementById('v-horizonte').textContent = horizonte;
+
+    const recupInicial = 0.92;
+    const ciclosTotales = ciclosDia * 365 * horizonte;
+    const caidaPorCiclo = (1 - umbral) / vida;
+    const diasHorizonte = 365 * horizonte;
+
+    let capDiaria = []; let cicloActual = 0;
+    for (let dia = 0; dia < diasHorizonte; dia++) {
+      let cap = 1 - caidaPorCiclo * cicloActual;
+      if (cap <= umbral) { cicloActual = 0; cap = 1; }
+      capDiaria.push(cap); cicloActual += ciclosDia;
+    }
+
+    const vidaMeses = (vida / ciclosDia) / 30;
+    const numReemplazos = Math.floor(ciclosTotales / vida);
+    const costoUnitario = precio * masaKg;
+    const costoTotalSorb = costoUnitario * (numReemplazos + 1);
+    const capProm = capDiaria.reduce((a,b) => a+b, 0) / capDiaria.length;
+    const recupProm = recupInicial * capProm;
+    const prodReal = prodDia * capDiaria.reduce((a,b) => a+b, 0);
+    const prodIdeal = prodDia * diasHorizonte;
+    const litioPerdido = prodIdeal - prodReal;
+    const valorLitioPerdido = litioPerdido * litio;
+    const costoTotal = costoTotalSorb + valorLitioPerdido;
+    const costoPorTon = costoTotal / prodReal;
+
+    document.getElementById('r-vida').textContent = vidaMeses.toFixed(1).replace('.', ',');
+    document.getElementById('r-reemplazos').textContent = numReemplazos;
+    document.getElementById('r-recup').textContent = (recupProm*100).toFixed(0) + '%';
+    document.getElementById('r-sobrecosto').textContent = '$' + fmt.format(Math.round(costoPorTon));
+    document.getElementById('r-costo-sorb').textContent = '$' + Math.round(costoTotalSorb/1e6) + 'M';
+    document.getElementById('r-costo-total').textContent = '$' + Math.round(costoTotal/1e6) + 'M';
+  }
+
+  ids.forEach(id => els[id].addEventListener('input', compute));
+  compute();
+</script>
+</body>
+</html>

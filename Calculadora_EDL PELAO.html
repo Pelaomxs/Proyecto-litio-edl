@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Extracción Directa de Litio (EDL)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #F8F9FA;
+    color: #2C2C2A;
+    line-height: 1.5;
+    padding: 32px 16px;
+  }
+  .container { max-width: 920px; margin: 0 auto; }
+  header { margin-bottom: 28px; border-bottom: 3px solid #1D9E75; padding-bottom: 16px; }
+  h1 { font-size: 26px; color: #0F6E56; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { font-size: 14px; color: #5F5E5A; }
+  .author { font-size: 13px; color: #0F6E56; font-weight: 700; margin-top: 6px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+  @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+  .card {
+    background: white;
+    border: 1px solid #E0DED6;
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .section-label {
+    font-size: 12px; font-weight: 700; color: #5F5E5A;
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;
+  }
+  .ctrl { margin-bottom: 20px; }
+  .ctrl:last-child { margin-bottom: 0; }
+  .ctrl-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .ctrl-label { font-size: 13px; color: #5F5E5A; }
+  .ctrl-val { font-size: 15px; font-weight: 700; color: #2C2C2A; }
+  input[type=range] {
+    width: 100%; height: 6px; border-radius: 3px; background: #E0DED6;
+    outline: none; -webkit-appearance: none; appearance: none; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #1D9E75; cursor: pointer; border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #1D9E75; cursor: pointer; border: 2px solid white;
+  }
+  .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .metric { background: #F1EFE8; border-radius: 8px; padding: 14px; }
+  .metric.highlight { background: #E1F5EE; }
+  .metric-label { font-size: 12px; color: #5F5E5A; margin-bottom: 4px; }
+  .metric-value { font-size: 26px; font-weight: 700; color: #2C2C2A; }
+  .metric.highlight .metric-value { color: #0F6E56; }
+  .metric-sub { font-size: 11px; color: #888780; margin-top: 2px; }
+  .bar-item { margin-bottom: 14px; }
+  .bar-head { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; }
+  .bar-track { background: #F1EFE8; border-radius: 5px; height: 26px; overflow: hidden; }
+  .bar-fill {
+    height: 100%; border-radius: 5px; display: flex; align-items: center;
+    padding-left: 10px; font-size: 12px; font-weight: 700;
+    transition: width 0.3s ease;
+  }
+  .env-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 720px) { .env-grid { grid-template-columns: 1fr; } }
+  footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid #E0DED6; font-size: 11px; color: #888780; }
+  .note { font-size: 12px; color: #854F0B; background: #FAEEDA; border-radius: 8px; padding: 12px 14px; margin-top: 16px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Calculadora de Extracción Directa de Litio (EDL)</h1>
+    <p class="subtitle">Análisis de sensibilidad del impacto económico y ambiental vs evaporación tradicional</p>
+    <p class="author">Desarrollada por Ricardo Ferrón</p>
+  </header>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="section-label">Variables del proyecto</p>
+      <div class="ctrl">
+        <div class="ctrl-row"><span class="ctrl-label">Producción anual (t LCE)</span><span class="ctrl-val" id="prod-val">20.000</span></div>
+        <input type="range" id="prod" min="5000" max="50000" step="1000" value="20000">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-row"><span class="ctrl-label">Precio litio (USD/t)</span><span class="ctrl-val" id="precio-val">$12.000</span></div>
+        <input type="range" id="precio" min="8000" max="30000" step="500" value="12000">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-row"><span class="ctrl-label">Recuperación EDL (%)</span><span class="ctrl-val" id="recedl-val">92%</span></div>
+        <input type="range" id="recedl" min="75" max="95" step="1" value="92">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-row"><span class="ctrl-label">Recuperación evaporación (%)</span><span class="ctrl-val" id="recevap-val">43%</span></div>
+        <input type="range" id="recevap" min="30" max="55" step="1" value="43">
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="section-label">Resultado económico</p>
+      <div class="result-grid">
+        <div class="metric highlight">
+          <div class="metric-label">Ingreso adicional/año</div>
+          <div class="metric-value" id="r-ingreso">$129M</div>
+          <div class="metric-sub">vs evaporación</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Litio extra capturado</div>
+          <div class="metric-value" id="r-litio">10.739</div>
+          <div class="metric-sub">t LCE/año</div>
+        </div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-head"><span>Producción con EDL</span><span id="b-edl-val">20.000 t</span></div>
+        <div class="bar-track"><div class="bar-fill" id="b-edl" style="width:100%; background:#1D9E75; color:#04342C;">EDL</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-head"><span>Equivalente evaporación</span><span id="b-evap-val">9.261 t</span></div>
+        <div class="bar-track"><div class="bar-fill" id="b-evap" style="width:46%; background:#B4B2A9; color:#2C2C2A;">Evap.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="section-label">Indicadores ambientales (mismo nivel de producción)</p>
+    <div class="env-grid">
+      <div class="metric">
+        <div class="metric-label">Agua ahorrada/año</div>
+        <div class="metric-value" id="r-agua">32M</div>
+        <div class="metric-sub">m³ vs evaporación</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Equivale a</div>
+        <div class="metric-value" id="r-piscinas">12.900</div>
+        <div class="metric-sub">piscinas olímpicas</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Superficie usada</div>
+        <div class="metric-value">100x</div>
+        <div class="metric-sub">menos terreno</div>
+      </div>
+    </div>
+    <div class="note">
+      <strong>Nota metodológica:</strong> El ingreso adicional refleja la ventaja bruta por mayor recuperación del mismo recurso de salmuera. No incluye costos de capital (CAPEX) de la planta EDL ni costos operacionales (OPEX), que corresponden a un nivel más profundo de análisis. Datos de recuperación y agua basados en pruebas de ENAMI en Salares Altoandinos (2024-2025).
+    </div>
+  </div>
+
+  <footer>
+    Herramienta de análisis · Datos: ENAMI, Cochilco, industria del litio 2024-2026 · Desarrollada por Ricardo Ferrón para evaluación preliminar de proyectos EDL
+  </footer>
+</div>
+
+<script>
+  const fmt = new Intl.NumberFormat('es-CL');
+  const ids = ['prod','precio','recedl','recevap'];
+  const els = {};
+  ids.forEach(id => els[id] = document.getElementById(id));
+
+  function calc() {
+    const prod = +els.prod.value;
+    const precio = +els.precio.value;
+    const recEdl = +els.recedl.value;
+    const recEvap = +els.recevap.value;
+
+    document.getElementById('prod-val').textContent = fmt.format(prod);
+    document.getElementById('precio-val').textContent = '$' + fmt.format(precio);
+    document.getElementById('recedl-val').textContent = recEdl + '%';
+    document.getElementById('recevap-val').textContent = recEvap + '%';
+
+    const litioEquivEvap = prod * (recEvap / recEdl);
+    const litioAdicional = prod - litioEquivEvap;
+    const ingresoAdicional = litioAdicional * precio;
+
+    const aguaEvap = prod * 1650;
+    const aguaEdl = prod * 36;
+    const aguaAhorrada = aguaEvap - aguaEdl;
+    const piscinas = aguaAhorrada / 2500;
+
+    document.getElementById('r-ingreso').textContent = '$' + Math.round(ingresoAdicional/1e6) + 'M';
+    document.getElementById('r-litio').textContent = fmt.format(Math.round(litioAdicional));
+    document.getElementById('r-agua').textContent = Math.round(aguaAhorrada/1e6) + 'M';
+    document.getElementById('r-piscinas').textContent = fmt.format(Math.round(piscinas));
+
+    document.getElementById('b-edl-val').textContent = fmt.format(prod) + ' t';
+    document.getElementById('b-evap-val').textContent = fmt.format(Math.round(litioEquivEvap)) + ' t';
+    const pctEvap = Math.round((litioEquivEvap / prod) * 100);
+    document.getElementById('b-evap').style.width = pctEvap + '%';
+  }
+
+  ids.forEach(id => els[id].addEventListener('input', calc));
+  calc();
+</script>
+</body>
+</html>
