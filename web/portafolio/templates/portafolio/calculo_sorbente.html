@@ -1,0 +1,101 @@
+{% extends "portafolio/base.html" %}
+{% block titulo %}Simulador de Degradacion del Sorbente EDL{% endblock %}
+{% block contenido %}
+  <header class="page-header">
+    <h1>Simulador de Degradacion del Sorbente EDL</h1>
+    <p class="subtitle">Analisis del costo real oculto en proyectos de extraccion directa de litio · Herramienta de due diligence</p>
+  </header>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="section-label">Parametros del sorbente</p>
+      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Precio del sorbente (USD/kg)</span><span class="ctrl-val" id="v-precio">$500</span></div><input type="range" id="precio" min="200" max="800" step="50" value="500"></div>
+      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Masa de sorbente (toneladas)</span><span class="ctrl-val" id="v-masa">10 t</span></div><input type="range" id="masa" min="2" max="50" step="1" value="10"></div>
+      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Vida util (ciclos)</span><span class="ctrl-val" id="v-vida">400</span></div><input type="range" id="vida" min="100" max="1000" step="50" value="400"></div>
+      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Ciclos por dia</span><span class="ctrl-val" id="v-ciclos">3</span></div><input type="range" id="ciclos" min="1" max="6" step="1" value="3"></div>
+    </div>
+    <div class="card">
+      <p class="section-label">Parametros de operacion</p>
+      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Umbral de reemplazo (%)</span><span class="ctrl-val" id="v-umbral">70%</span></div><input type="range" id="umbral" min="50" max="85" step="5" value="70"></div>
+      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Produccion diaria (t LCE)</span><span class="ctrl-val" id="v-prod">55</span></div><input type="range" id="prod" min="20" max="100" step="5" value="55"></div>
+      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Precio litio (USD/t)</span><span class="ctrl-val" id="v-litio">$12.000</span></div><input type="range" id="litio" min="8000" max="25000" step="500" value="12000"></div>
+      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Horizonte (anos)</span><span class="ctrl-val" id="v-horizonte">8</span></div><input type="range" id="horizonte" min="3" max="15" step="1" value="8"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="section-label">El costo real que el vendedor no muestra</p>
+    <div class="mgrid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="metric"><p class="mlabel">Vida util</p><p class="mval" id="r-vida">4,4</p><p class="msub">meses por carga</p></div>
+      <div class="metric"><p class="mlabel">Reemplazos</p><p class="mval" id="r-reemplazos">21</p><p class="msub">en el horizonte</p></div>
+      <div class="metric"><p class="mlabel">Recuperacion real</p><p class="mval" id="r-recup">78%</p><p class="msub">promedio (vs 92%)</p></div>
+      <div class="metric danger"><p class="mlabel">Sobrecosto/t</p><p class="mval" id="r-sobrecosto">$2.897</p><p class="msub">USD por t LCE</p></div>
+    </div>
+    <div class="mgrid" style="grid-template-columns: 1fr 1fr; margin-top: 12px;">
+      <div class="metric"><p class="mlabel">Costo total en sorbentes</p><p class="mval" id="r-costo-sorb">$110M</p><p class="msub">USD acumulado</p></div>
+      <div class="metric danger"><p class="mlabel">Costo oculto total</p><p class="mval" id="r-costo-total">$396M</p><p class="msub">sorbente + litio perdido</p></div>
+    </div>
+    <div class="note"><strong>Nota metodologica:</strong> Modelo de degradacion lineal de primera aproximacion. La degradacion real puede seguir curvas mas complejas segun el tipo de sorbente y la quimica de la salmuera. El valor esta en visibilizar un costo que normalmente queda oculto. Rangos basados en PatSnap y RFF (2025): sorbentes $200-800/kg, vida util 200-500 ciclos, degradacion 20-40% en 100-200 ciclos.</div>
+  </div>
+
+<script>
+  const fmt = new Intl.NumberFormat('es-CL');
+  const ids = ['precio','masa','vida','ciclos','umbral','prod','litio','horizonte'];
+  const els = {}; ids.forEach(id => els[id] = document.getElementById(id));
+
+  function compute() {
+    const precio = +els.precio.value;
+    const masaKg = +els.masa.value * 1000;
+    const vida = +els.vida.value;
+    const ciclosDia = +els.ciclos.value;
+    const umbral = +els.umbral.value / 100;
+    const prodDia = +els.prod.value;
+    const litio = +els.litio.value;
+    const horizonte = +els.horizonte.value;
+
+    document.getElementById('v-precio').textContent = '$' + precio;
+    document.getElementById('v-masa').textContent = (masaKg/1000) + ' t';
+    document.getElementById('v-vida').textContent = vida;
+    document.getElementById('v-ciclos').textContent = ciclosDia;
+    document.getElementById('v-umbral').textContent = (umbral*100).toFixed(0) + '%';
+    document.getElementById('v-prod').textContent = prodDia;
+    document.getElementById('v-litio').textContent = '$' + fmt.format(litio);
+    document.getElementById('v-horizonte').textContent = horizonte;
+
+    const recupInicial = 0.92;
+    const ciclosTotales = ciclosDia * 365 * horizonte;
+    const caidaPorCiclo = (1 - umbral) / vida;
+    const diasHorizonte = 365 * horizonte;
+
+    let capDiaria = []; let cicloActual = 0;
+    for (let dia = 0; dia < diasHorizonte; dia++) {
+      let cap = 1 - caidaPorCiclo * cicloActual;
+      if (cap <= umbral) { cicloActual = 0; cap = 1; }
+      capDiaria.push(cap); cicloActual += ciclosDia;
+    }
+
+    const vidaMeses = (vida / ciclosDia) / 30;
+    const numReemplazos = Math.floor(ciclosTotales / vida);
+    const costoUnitario = precio * masaKg;
+    const costoTotalSorb = costoUnitario * (numReemplazos + 1);
+    const capProm = capDiaria.reduce((a,b) => a+b, 0) / capDiaria.length;
+    const recupProm = recupInicial * capProm;
+    const prodReal = prodDia * capDiaria.reduce((a,b) => a+b, 0);
+    const prodIdeal = prodDia * diasHorizonte;
+    const litioPerdido = prodIdeal - prodReal;
+    const valorLitioPerdido = litioPerdido * litio;
+    const costoTotal = costoTotalSorb + valorLitioPerdido;
+    const costoPorTon = costoTotal / prodReal;
+
+    document.getElementById('r-vida').textContent = vidaMeses.toFixed(1).replace('.', ',');
+    document.getElementById('r-reemplazos').textContent = numReemplazos;
+    document.getElementById('r-recup').textContent = (recupProm*100).toFixed(0) + '%';
+    document.getElementById('r-sobrecosto').textContent = '$' + fmt.format(Math.round(costoPorTon));
+    document.getElementById('r-costo-sorb').textContent = '$' + Math.round(costoTotalSorb/1e6) + 'M';
+    document.getElementById('r-costo-total').textContent = '$' + Math.round(costoTotal/1e6) + 'M';
+  }
+
+  ids.forEach(id => els[id].addEventListener('input', compute));
+  compute();
+</script>
+{% endblock %}

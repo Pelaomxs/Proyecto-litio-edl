@@ -1,0 +1,123 @@
+{% extends "portafolio/base.html" %}
+{% block titulo %}Calculadora EDL vs Evaporacion{% endblock %}
+{% block contenido %}
+  <header class="page-header">
+    <h1>Calculadora de Extraccion Directa de Litio (EDL)</h1>
+    <p class="subtitle">Analisis de sensibilidad del impacto economico y ambiental vs evaporacion tradicional</p>
+  </header>
+
+  <div class="grid-2">
+    <div class="card">
+      <p class="section-label">Variables del proyecto</p>
+      <div class="ctrl">
+        <div class="ctrl-row"><span class="ctrl-label">Produccion anual (t LCE)</span><span class="ctrl-val" id="prod-val">20.000</span></div>
+        <input type="range" id="prod" min="5000" max="50000" step="1000" value="20000">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-row"><span class="ctrl-label">Precio litio (USD/t)</span><span class="ctrl-val" id="precio-val">$12.000</span></div>
+        <input type="range" id="precio" min="8000" max="30000" step="500" value="12000">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-row"><span class="ctrl-label">Recuperacion EDL (%)</span><span class="ctrl-val" id="recedl-val">92%</span></div>
+        <input type="range" id="recedl" min="75" max="95" step="1" value="92">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-row"><span class="ctrl-label">Recuperacion evaporacion (%)</span><span class="ctrl-val" id="recevap-val">43%</span></div>
+        <input type="range" id="recevap" min="30" max="55" step="1" value="43">
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="section-label">Resultado economico</p>
+      <div class="result-grid">
+        <div class="metric highlight">
+          <div class="metric-label">Ingreso adicional/ano</div>
+          <div class="metric-value" id="r-ingreso">$129M</div>
+          <div class="metric-sub">vs evaporacion</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Litio extra capturado</div>
+          <div class="metric-value" id="r-litio">10.739</div>
+          <div class="metric-sub">t LCE/ano</div>
+        </div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-head"><span>Produccion con EDL</span><span id="b-edl-val">20.000 t</span></div>
+        <div class="bar-track"><div class="bar-fill" id="b-edl" style="width:100%; background:#1D9E75; color:#04342C;">EDL</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-head"><span>Equivalente evaporacion</span><span id="b-evap-val">9.261 t</span></div>
+        <div class="bar-track"><div class="bar-fill" id="b-evap" style="width:46%; background:#B4B2A9; color:#2C2C2A;">Evap.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="section-label">Indicadores ambientales (mismo nivel de produccion)</p>
+    <div class="env-grid">
+      <div class="metric">
+        <div class="metric-label">Agua ahorrada/ano</div>
+        <div class="metric-value" id="r-agua">32M</div>
+        <div class="metric-sub">m3 vs evaporacion</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Equivale a</div>
+        <div class="metric-value" id="r-piscinas">12.900</div>
+        <div class="metric-sub">piscinas olimpicas</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Superficie usada</div>
+        <div class="metric-value">100x</div>
+        <div class="metric-sub">menos terreno</div>
+      </div>
+    </div>
+    <div class="note">
+      <strong>Nota metodologica:</strong> El ingreso adicional refleja la ventaja bruta por mayor recuperacion del mismo recurso de salmuera. No incluye costos de capital (CAPEX) de la planta EDL ni costos operacionales (OPEX), que corresponden a un nivel mas profundo de analisis. Datos de recuperacion y agua basados en pruebas de ENAMI en Salares Altoandinos (2024-2025).
+    </div>
+  </div>
+
+  <p style="font-size:11px; color:#888780; margin-top: 4px;">
+    Herramienta de analisis · Datos: ENAMI, Cochilco, industria del litio 2024-2026
+  </p>
+
+<script>
+  const fmt = new Intl.NumberFormat('es-CL');
+  const ids = ['prod','precio','recedl','recevap'];
+  const els = {};
+  ids.forEach(id => els[id] = document.getElementById(id));
+
+  function calc() {
+    const prod = +els.prod.value;
+    const precio = +els.precio.value;
+    const recEdl = +els.recedl.value;
+    const recEvap = +els.recevap.value;
+
+    document.getElementById('prod-val').textContent = fmt.format(prod);
+    document.getElementById('precio-val').textContent = '$' + fmt.format(precio);
+    document.getElementById('recedl-val').textContent = recEdl + '%';
+    document.getElementById('recevap-val').textContent = recEvap + '%';
+
+    const litioEquivEvap = prod * (recEvap / recEdl);
+    const litioAdicional = prod - litioEquivEvap;
+    const ingresoAdicional = litioAdicional * precio;
+
+    const aguaEvap = prod * 1650;
+    const aguaEdl = prod * 36;
+    const aguaAhorrada = aguaEvap - aguaEdl;
+    const piscinas = aguaAhorrada / 2500;
+
+    document.getElementById('r-ingreso').textContent = '$' + Math.round(ingresoAdicional/1e6) + 'M';
+    document.getElementById('r-litio').textContent = fmt.format(Math.round(litioAdicional));
+    document.getElementById('r-agua').textContent = Math.round(aguaAhorrada/1e6) + 'M';
+    document.getElementById('r-piscinas').textContent = fmt.format(Math.round(piscinas));
+
+    document.getElementById('b-edl-val').textContent = fmt.format(prod) + ' t';
+    document.getElementById('b-evap-val').textContent = fmt.format(Math.round(litioEquivEvap)) + ' t';
+    const pctEvap = Math.round((litioEquivEvap / prod) * 100);
+    document.getElementById('b-evap').style.width = pctEvap + '%';
+  }
+
+  ids.forEach(id => els[id].addEventListener('input', calc));
+  calc();
+</script>
+{% endblock %}

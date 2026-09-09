@@ -1,0 +1,29 @@
+{% load static %}<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block titulo %}Portafolio EDL — Ricardo Ferron{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'portafolio/css/estilo.css' %}">
+</head>
+<body>
+  <div class="navbar">
+    <div class="container">
+      <a class="brand" href="{% url 'portafolio:home' %}">Portafolio EDL — Ricardo Ferron</a>
+      <nav>
+        <a href="{% url 'portafolio:home' %}">Contexto</a>
+        <a href="{% url 'portafolio:calculo_edl' %}">EDL vs Evaporacion</a>
+        <a href="{% url 'portafolio:calculo_sorbente' %}">Sorbente</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    {% block contenido %}{% endblock %}
+  </div>
+
+  <footer class="site-footer">
+    Portafolio Extraccion Directa de Litio (EDL) — desarrollado por Ricardo Ferron
+  </footer>
+</body>
+</html>

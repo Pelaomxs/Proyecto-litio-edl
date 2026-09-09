@@ -1,0 +1,61 @@
+{% extends "portafolio/base.html" %}
+{% load static %}
+{% block titulo %}Portafolio EDL — Contexto{% endblock %}
+{% block contenido %}
+  <div class="hero">
+    <h1>Portafolio Extraccion Directa de Litio (EDL)</h1>
+    <p>
+      Herramienta de due diligence que cuantifica el costo oculto de la degradacion del sorbente en EDL,
+      exponiendo la brecha entre la recuperacion nominal de los proveedores y el costo real de propiedad —
+      ademas de un modelo de sensibilidad para comparar EDL contra evaporacion tradicional.
+    </p>
+  </div>
+
+  <div class="slide-viewer">
+    <p class="section-label">Contexto del proyecto</p>
+    <img id="slide-img" src="{% static 'portafolio/slides/slide-01.png' %}" alt="Diapositiva 1">
+    <div class="slide-controls">
+      <button type="button" id="btn-prev">&larr; Anterior</button>
+      <span id="slide-contador">1 / {{ num_slides }}</span>
+      <button type="button" id="btn-next">Siguiente &rarr;</button>
+    </div>
+  </div>
+
+  <div class="calc-cards">
+    <a class="calc-card" href="{% url 'portafolio:calculo_edl' %}">
+      <h3>Calculadora EDL vs Evaporacion</h3>
+      <p>Analisis de sensibilidad del impacto economico y ambiental de EDL frente al metodo tradicional de evaporacion.</p>
+      <span class="arrow">Ir al calculo &rarr;</span>
+    </a>
+    <a class="calc-card" href="{% url 'portafolio:calculo_sorbente' %}">
+      <h3>Simulador de Degradacion del Sorbente</h3>
+      <p>El costo real oculto que el vendedor no muestra: reemplazos de sorbente y litio perdido por degradacion.</p>
+      <span class="arrow">Ir al calculo &rarr;</span>
+    </a>
+  </div>
+
+  <script>
+    (function () {
+      const total = {{ num_slides }};
+      let actual = 1;
+      const img = document.getElementById('slide-img');
+      const contador = document.getElementById('slide-contador');
+
+      function render() {
+        const n = String(actual).padStart(2, '0');
+        img.src = "{% static 'portafolio/slides/' %}slide-" + n + ".png";
+        img.alt = "Diapositiva " + actual;
+        contador.textContent = actual + " / " + total;
+      }
+
+      document.getElementById('btn-prev').addEventListener('click', function () {
+        actual = actual > 1 ? actual - 1 : total;
+        render();
+      });
+      document.getElementById('btn-next').addEventListener('click', function () {
+        actual = actual < total ? actual + 1 : 1;
+        render();
+      });
+    })();
+  </script>
+{% endblock %}
