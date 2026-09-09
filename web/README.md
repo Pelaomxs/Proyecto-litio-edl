@@ -1,6 +1,6 @@
-# Portafolio EDL — versión web (Django)
+# Proyecto EDL — versión web (Django)
 
-Sitio web para el Portafolio de Extracción Directa de Litio (EDL): muestra las diapositivas de contexto
+Sitio web para el Proyecto de Extracción Directa de Litio (EDL): muestra las diapositivas de contexto
 del proyecto y luego las dos calculadoras interactivas ya validadas
 ([Calculadora_EDL.html](../Calculadora_EDL.html) y
 [Simulador_Sorbente_EDL.html](../Simulador_Sorbente_EDL.html)), portadas a un layout común. No tiene

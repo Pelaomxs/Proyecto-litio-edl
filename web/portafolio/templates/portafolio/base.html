@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block titulo %}Portafolio EDL — Ricardo Ferrón{% endblock %}</title>
+  <title>{% block titulo %}Proyecto EDL — Ricardo Ferrón{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'portafolio/css/estilo.css' %}">
 </head>
 <body>
   <div class="navbar">
     <div class="container">
-      <a class="brand" href="{% url 'portafolio:home' %}">Portafolio EDL — Ricardo Ferrón</a>
+      <a class="brand" href="{% url 'portafolio:home' %}">Proyecto EDL — Ricardo Ferrón</a>
       <nav>
         <a href="{% url 'portafolio:home' %}">Contexto</a>
         <a href="{% url 'portafolio:calculo_edl' %}">EDL vs Evaporación</a>
@@ -23,7 +23,7 @@
   </div>
 
   <footer class="site-footer">
-    Portafolio Extracción Directa de Litio (EDL) — desarrollado por Ricardo Ferrón
+    Proyecto Extracción Directa de Litio (EDL) — desarrollado por Ricardo Ferrón
   </footer>
 </body>
 </html>
