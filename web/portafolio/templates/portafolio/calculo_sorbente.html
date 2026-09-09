@@ -1,6 +1,7 @@
 {% extends "portafolio/base.html" %}
 {% block titulo %}Simulador de Degradacion del Sorbente EDL{% endblock %}
 {% block contenido %}
+  <a href="{% url 'portafolio:home' %}" class="volver-link">&larr; Volver al inicio</a>
   <header class="page-header">
     <h1>Simulador de Degradacion del Sorbente EDL</h1>
     <p class="subtitle">Analisis del costo real oculto en proyectos de extraccion directa de litio · Herramienta de due diligence</p>
@@ -36,6 +37,58 @@
       <div class="metric danger"><p class="mlabel">Costo oculto total</p><p class="mval" id="r-costo-total">$396M</p><p class="msub">sorbente + litio perdido</p></div>
     </div>
     <div class="note"><strong>Nota metodologica:</strong> Modelo de degradacion lineal de primera aproximacion. La degradacion real puede seguir curvas mas complejas segun el tipo de sorbente y la quimica de la salmuera. El valor esta en visibilizar un costo que normalmente queda oculto. Rangos basados en PatSnap y RFF (2025): sorbentes $200-800/kg, vida util 200-500 ciclos, degradacion 20-40% en 100-200 ciclos.</div>
+  </div>
+
+  <h2 class="section-title">Metodologia: de donde sale cada numero</h2>
+  <div class="card metodologia">
+    <p>
+      La due diligence tipica de un proveedor de EDL muestra la recuperacion con sorbente
+      <strong>nuevo</strong>. Este simulador modela lo que pasa despues: el sorbente se degrada con el
+      uso, se reemplaza periodicamente, y ambas cosas tienen un costo que no aparece en el folleto del
+      proveedor.
+    </p>
+    <dl>
+      <dt>Curva de degradacion (diente de sierra)</dt>
+      <dd>Cada ciclo de uso reduce la capacidad del sorbente en un porcentaje fijo:
+        <code>caida por ciclo = (1 &minus; Umbral de reemplazo) / Vida util</code>. Cuando la capacidad
+        llega al umbral, se reemplaza la carga completa y la capacidad vuelve a 100% -- de ahi la forma
+        de diente de sierra si se grafica dia a dia.</dd>
+
+      <dt>Vida util en meses = (Vida util en ciclos / Ciclos por dia) / 30</dt>
+      <dd>Convierte la vida util de "numero de ciclos" (una unidad de ingenieria) a meses de calendario
+        (una unidad que se puede comparar con el horizonte de evaluacion), usando cuantos ciclos procesa
+        la planta por dia.</dd>
+
+      <dt>Numero de reemplazos = Ciclos totales del horizonte / Vida util</dt>
+      <dd>Cuantas cargas completas de sorbente se necesitan a lo largo de todo el horizonte de
+        evaluacion. Determina directamente el costo acumulado en sorbente.</dd>
+
+      <dt>Costo total en sorbentes = (Precio &times; Masa) &times; (Reemplazos + 1)</dt>
+      <dd>El "+1" es la carga inicial, antes del primer reemplazo. Es el desembolso directo en material
+        -- la parte del costo que el proveedor si suele mencionar.</dd>
+
+      <dt>Recuperacion real = Recuperacion inicial (92%) &times; Capacidad promedio en el horizonte</dt>
+      <dd>La recuperacion nominal del proveedor asume sorbente siempre nuevo (capacidad 100%). Como la
+        capacidad real oscila entre 100% y el umbral de reemplazo durante toda la vida de la planta, la
+        recuperacion promedio real es siempre menor a la nominal -- esa es la brecha que expone esta
+        herramienta.</dd>
+
+      <dt>Litio perdido = Produccion ideal &minus; Produccion real acumulada</dt>
+      <dd>Cuanto litio se dejo de producir, en todo el horizonte, por operar con un sorbente que pasa
+        gran parte del tiempo por debajo de su capacidad nominal.</dd>
+
+      <dt>Costo oculto total = Costo en sorbentes + Valor del litio perdido</dt>
+      <dd>Suma el costo que el proveedor si muestra (comprar sorbente) con el que normalmente no muestra
+        (litio que se dejo de vender por la degradacion). Dividido por la produccion real, da el
+        <strong>sobrecosto real por tonelada</strong> -- el numero que deberia entrar a cualquier
+        evaluacion de rentabilidad del proyecto.</dd>
+    </dl>
+    <div class="note">
+      <strong>Por que calculamos esto:</strong> comparar proveedores de EDL solo por su recuperacion
+      nominal favorece sistematicamente al que promete el numero mas alto en laboratorio, no al que
+      rinde mejor en operacion real durante 8-10 anos. Este modelo pone ambos proveedores en la misma
+      base de comparacion: costo total de propiedad, no ficha tecnica.
+    </div>
   </div>
 
 <script>

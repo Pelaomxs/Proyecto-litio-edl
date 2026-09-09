@@ -1,6 +1,7 @@
 {% extends "portafolio/base.html" %}
 {% block titulo %}Calculadora EDL vs Evaporacion{% endblock %}
 {% block contenido %}
+  <a href="{% url 'portafolio:home' %}" class="volver-link">&larr; Volver al inicio</a>
   <header class="page-header">
     <h1>Calculadora de Extraccion Directa de Litio (EDL)</h1>
     <p class="subtitle">Analisis de sensibilidad del impacto economico y ambiental vs evaporacion tradicional</p>
@@ -76,9 +77,55 @@
     </div>
   </div>
 
-  <p style="font-size:11px; color:#888780; margin-top: 4px;">
-    Herramienta de analisis · Datos: ENAMI, Cochilco, industria del litio 2024-2026
-  </p>
+  <h2 class="section-title">Metodologia: de donde sale cada numero</h2>
+  <div class="card metodologia">
+    <p>
+      El objetivo de esta calculadora es cuantificar, con supuestos explicitos y ajustables, la ventaja
+      economica y ambiental de reemplazar la evaporacion tradicional por EDL sobre el mismo recurso de
+      salmuera — el tipo de analisis que deberia respaldar cualquier decision de invertir en una u otra
+      tecnologia.
+    </p>
+    <dl>
+      <dt>Produccion anual y precio del litio</dt>
+      <dd>Son los dos supuestos de escala del proyecto: cuanto litio carbonato equivalente (LCE) produce
+        la planta al ano y a que precio se vende. Ambos son ajustables porque varian mucho segun el
+        proyecto y el ciclo de precios del mercado.</dd>
+
+      <dt>Recuperacion EDL (92% por defecto) y Recuperacion evaporacion (43%)</dt>
+      <dd>Porcentaje del litio disuelto en la salmuera que efectivamente se logra extraer con cada
+        tecnologia. Los valores por defecto se basan en pruebas de ENAMI en Salares Altoandinos
+        (2024-2025); en la practica dependen de la quimica especifica de cada salmuera.</dd>
+
+      <dt>Litio equivalente evaporacion = Produccion &times; (Recuperacion evaporacion / Recuperacion EDL)</dt>
+      <dd>Pregunta que responde: si se procesara la <em>misma</em> salmuera con evaporacion en vez de
+        EDL, cuanto litio se recuperaria en realidad, dado que la evaporacion pierde mas litio en el
+        camino. Es el punto de comparacion justo -- mismo recurso, distinta eficiencia.</dd>
+
+      <dt>Litio adicional capturado = Produccion &minus; Litio equivalente evaporacion</dt>
+      <dd>El litio extra que la EDL logra capturar del mismo volumen de salmuera, solo por tener mayor
+        recuperacion.</dd>
+
+      <dt>Ingreso adicional/ano = Litio adicional &times; Precio del litio</dt>
+      <dd>Valor economico de ese litio extra. <strong>No</strong> incluye CAPEX de la planta EDL ni
+        costos operacionales (OPEX) -- es la ventaja bruta por recuperacion, no una evaluacion de
+        proyecto completa.</dd>
+
+      <dt>Agua ahorrada/ano</dt>
+      <dd>Se calcula con dos constantes de consumo de agua por tonelada de LCE (1.650 m&sup3;/t en
+        evaporacion vs 36 m&sup3;/t en EDL, tambien de pruebas ENAMI), multiplicadas por la produccion
+        anual y restadas entre si.</dd>
+
+      <dt>Piscinas olimpicas</dt>
+      <dd>Conversion de escala: el agua ahorrada dividida por 2.500 m&sup3;, el volumen estandar de una
+        piscina olimpica -- solo para que la cifra sea mas facil de dimensionar.</dd>
+    </dl>
+    <div class="note">
+      <strong>Por que calculamos esto:</strong> en due diligence de proyectos de litio, la comparacion
+      que casi nunca se hace explicita es "mismo recurso, distinta tecnologia, distinto resultado". Este
+      modelo aisla esa diferencia para que se pueda argumentar con numeros, no solo con la promesa
+      generica de que "la EDL es mejor".
+    </div>
+  </div>
 
 <script>
   const fmt = new Intl.NumberFormat('es-CL');

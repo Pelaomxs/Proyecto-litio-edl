@@ -20,6 +20,10 @@ body {
 .navbar nav a { margin-left: 20px; font-size: 14px; opacity: 0.9; }
 .navbar nav a:hover { opacity: 1; text-decoration: underline; }
 
+/* ── Volver ─────────────────────────────────────────────── */
+.volver-link { display: inline-block; font-size: 13px; color: #0F6E56; font-weight: 600; text-decoration: none; margin-bottom: 16px; }
+.volver-link:hover { text-decoration: underline; }
+
 /* ── Header comun ───────────────────────────────────────── */
 header.page-header { margin-bottom: 28px; border-bottom: 3px solid #1D9E75; padding-bottom: 16px; }
 header.page-header h1 { font-size: 26px; color: #0F6E56; font-weight: 700; margin-bottom: 4px; }
@@ -108,3 +112,22 @@ footer.site-footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid 
 .mitigacion-card h3 { color: #0F6E56; font-size: 16px; margin-bottom: 10px; }
 .mitigacion-card ul { padding-left: 18px; font-size: 14px; color: #2C2C2A; }
 .mitigacion-card li { margin-bottom: 7px; }
+
+/* ── Metodologia (dl/dt/dd) en las paginas de calculo ───── */
+.metodologia > p { font-size: 14px; color: #3F3E3B; margin-bottom: 16px; }
+.metodologia dl { margin-bottom: 4px; }
+.metodologia dt { font-size: 14px; font-weight: 700; color: #0F6E56; margin-top: 16px; font-family: monospace, monospace; }
+.metodologia dt:first-of-type { margin-top: 0; }
+.metodologia dd { font-size: 13px; color: #3F3E3B; margin: 4px 0 0; line-height: 1.55; }
+.metodologia code { background: #F1EFE8; border-radius: 4px; padding: 1px 5px; font-size: 12px; }
+
+/* ── Ubicaciones optimas / Maricunga ─────────────────────── */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0; }
+@media (max-width: 760px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
+.stat-grid .metric-value { font-size: 22px; }
+.requisitos-tabla { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; }
+.requisitos-tabla th, .requisitos-tabla td { text-align: left; padding: 9px 10px; border-bottom: 1px solid #E0DED6; }
+.requisitos-tabla th { color: #5F5E5A; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+.requisitos-tabla td.si { color: #0F6E56; font-weight: 700; }
+.fuentes { font-size: 11px; color: #A9A79E; margin-top: 16px; line-height: 1.6; }
+.fuentes a { color: #888780; }
