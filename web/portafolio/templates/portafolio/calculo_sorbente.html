@@ -10,9 +10,9 @@
   <div class="grid-2">
     <div class="card">
       <p class="section-label">Parámetros del sorbente</p>
-      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Precio del sorbente (USD/kg)</span><span class="ctrl-val" id="v-precio">$500</span></div><input type="range" id="precio" min="200" max="800" step="50" value="500"></div>
-      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Masa de sorbente (toneladas)</span><span class="ctrl-val" id="v-masa">10 t</span></div><input type="range" id="masa" min="2" max="50" step="1" value="10"></div>
-      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Vida útil (ciclos)</span><span class="ctrl-val" id="v-vida">400</span></div><input type="range" id="vida" min="100" max="1000" step="50" value="400"></div>
+      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Precio del sorbente (USD/kg)</span><span class="ctrl-val" id="v-precio">$300</span></div><input type="range" id="precio" min="200" max="800" step="50" value="300"></div>
+      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Capacidad del sorbente (mg Li/g por ciclo)</span><span class="ctrl-val" id="v-capacidad">15</span></div><input type="range" id="capacidad" min="2" max="30" step="1" value="15"></div>
+      <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Vida útil (ciclos)</span><span class="ctrl-val" id="v-vida">1500</span></div><input type="range" id="vida" min="200" max="3000" step="100" value="1500"></div>
       <div class="ctrl"><div class="ctrl-row"><span class="ctrl-label">Ciclos por día</span><span class="ctrl-val" id="v-ciclos">3</span></div><input type="range" id="ciclos" min="1" max="6" step="1" value="3"></div>
     </div>
     <div class="card">
@@ -25,16 +25,25 @@
   </div>
 
   <div class="card">
+    <p class="section-label">Inventario de sorbente requerido</p>
+    <div class="metric highlight" style="margin-bottom: 16px;">
+      <p class="mlabel">Masa de sorbente necesaria en la planta</p>
+      <p class="mval" id="r-masa" style="font-size: 30px;">230</p>
+      <p class="msub">toneladas — calculada a partir de la producción diaria y la capacidad del sorbente, no supuesta a mano</p>
+    </div>
+  </div>
+
+  <div class="card">
     <p class="section-label">El costo real que el vendedor no muestra</p>
     <div class="mgrid" style="grid-template-columns: repeat(4, 1fr);">
-      <div class="metric"><p class="mlabel">Vida útil</p><p class="mval" id="r-vida">4,4</p><p class="msub">meses por carga</p></div>
-      <div class="metric"><p class="mlabel">Reemplazos</p><p class="mval" id="r-reemplazos">21</p><p class="msub">en el horizonte</p></div>
-      <div class="metric"><p class="mlabel">Recuperación real</p><p class="mval" id="r-recup">78%</p><p class="msub">promedio (vs 92%)</p></div>
-      <div class="metric danger"><p class="mlabel">Sobrecosto/t</p><p class="mval" id="r-sobrecosto">$2.897</p><p class="msub">USD por t LCE</p></div>
+      <div class="metric"><p class="mlabel">Vida útil</p><p class="mval" id="r-vida">16,7</p><p class="msub">meses por carga</p></div>
+      <div class="metric"><p class="mlabel">Reemplazos</p><p class="mval" id="r-reemplazos">5</p><p class="msub">en el horizonte</p></div>
+      <div class="metric"><p class="mlabel">Recuperación real</p><p class="mval" id="r-recup">79%</p><p class="msub">promedio (vs 92%)</p></div>
+      <div class="metric danger"><p class="mlabel">Sobrecosto/t</p><p class="mval" id="r-sobrecosto">$5.072</p><p class="msub">USD por t LCE</p></div>
     </div>
     <div class="mgrid" style="grid-template-columns: 1fr 1fr; margin-top: 12px;">
-      <div class="metric"><p class="mlabel">Costo total en sorbentes</p><p class="mval" id="r-costo-sorb">$110M</p><p class="msub">USD acumulado</p></div>
-      <div class="metric danger"><p class="mlabel">Costo oculto total</p><p class="mval" id="r-costo-total">$396M</p><p class="msub">sorbente + litio perdido</p></div>
+      <div class="metric"><p class="mlabel">Costo total en sorbentes</p><p class="mval" id="r-costo-sorb">$414M</p><p class="msub">USD acumulado</p></div>
+      <div class="metric danger"><p class="mlabel">Costo oculto total</p><p class="mval" id="r-costo-total">$695M</p><p class="msub">sorbente + litio perdido</p></div>
     </div>
     <div class="note"><strong>Nota metodológica:</strong> Modelo de degradación lineal de primera aproximación. La degradación real puede seguir curvas más complejas según el tipo de sorbente y la química de la salmuera. El valor está en visibilizar un costo que normalmente queda oculto. Rangos basados en PatSnap y RFF (2025): sorbentes $200-800/kg, vida útil 200-500 ciclos, degradación 20-40% en 100-200 ciclos.</div>
   </div>
@@ -48,6 +57,18 @@
       proveedor.
     </p>
     <dl>
+      <dt>Inventario de sorbente = Litio a capturar por día / Capacidad de captura del sorbente</dt>
+      <dd>Este número ya no se escribe a mano -- antes era un input manual (10 toneladas fijas) que
+        podía quedar físicamente inconsistente con el tamaño real de la planta. Ahora se deriva en dos
+        pasos. Primero, cada tonelada de carbonato de litio (Li&#8322;CO&#8323;) contiene 0,188 toneladas
+        de litio metálico (es la fracción de litio en la masa molar del compuesto, por estequiometría), así
+        que <code>litio a capturar por día (mg) = Producción diaria (t LCE) &times; 1.000.000.000 &times; 0,188</code>.
+        Segundo, se divide ese litio diario por cuánto litio atrapa un gramo de sorbente en cada ciclo (su
+        "capacidad") y por los ciclos que la planta procesa al día:
+        <code>masa de sorbente (kg) = litio a capturar por día (mg) / (Ciclos por día &times; Capacidad &times; 1.000)</code>.
+        El resultado es la masa de sorbente que la planta necesita tener en inventario para sostener esa
+        producción -- un número que depende de la física del proceso, no de un supuesto arbitrario.</dd>
+
       <dt>Curva de degradación (diente de sierra)</dt>
       <dd>Cada ciclo de uso reduce la capacidad del sorbente en un porcentaje fijo:
         <code>caída por ciclo = (1 &minus; Umbral de reemplazo) / Vida útil</code>. Cuando la capacidad
@@ -63,9 +84,10 @@
       <dd>Cuántas cargas completas de sorbente se necesitan a lo largo de todo el horizonte de
         evaluación. Determina directamente el costo acumulado en sorbente.</dd>
 
-      <dt>Costo total en sorbentes = (Precio &times; Masa) &times; (Reemplazos + 1)</dt>
+      <dt>Costo total en sorbentes = (Precio &times; Masa calculada) &times; (Reemplazos + 1)</dt>
       <dd>El "+1" es la carga inicial, antes del primer reemplazo. Es el desembolso directo en material
-        -- la parte del costo que el proveedor sí suele mencionar.</dd>
+        -- la parte del costo que el proveedor sí suele mencionar. Al usar la masa calculada en vez de un
+        valor a mano, este costo ahora escala correctamente con el tamaño real de la planta.</dd>
 
       <dt>Recuperación real = Recuperación inicial (92%) &times; Capacidad promedio en el horizonte</dt>
       <dd>La recuperación nominal del proveedor asume sorbente siempre nuevo (capacidad 100%). Como la
@@ -93,12 +115,15 @@
 
 <script>
   const fmt = new Intl.NumberFormat('es-CL');
-  const ids = ['precio','masa','vida','ciclos','umbral','prod','litio','horizonte'];
+  const ids = ['precio','capacidad','vida','ciclos','umbral','prod','litio','horizonte'];
   const els = {}; ids.forEach(id => els[id] = document.getElementById(id));
+
+  // 1 tonelada de LCE (carbonato de litio, Li2CO3) contiene 0.188 t de litio metalico
+  const FRACCION_LI_EN_LCE = 0.188;
 
   function compute() {
     const precio = +els.precio.value;
-    const masaKg = +els.masa.value * 1000;
+    const capacidad = +els.capacidad.value; // mg de litio capturado por gramo de sorbente, por ciclo
     const vida = +els.vida.value;
     const ciclosDia = +els.ciclos.value;
     const umbral = +els.umbral.value / 100;
@@ -107,13 +132,22 @@
     const horizonte = +els.horizonte.value;
 
     document.getElementById('v-precio').textContent = '$' + precio;
-    document.getElementById('v-masa').textContent = (masaKg/1000) + ' t';
+    document.getElementById('v-capacidad').textContent = capacidad;
     document.getElementById('v-vida').textContent = vida;
     document.getElementById('v-ciclos').textContent = ciclosDia;
     document.getElementById('v-umbral').textContent = (umbral*100).toFixed(0) + '%';
     document.getElementById('v-prod').textContent = prodDia;
     document.getElementById('v-litio').textContent = '$' + fmt.format(litio);
     document.getElementById('v-horizonte').textContent = horizonte;
+
+    // Litio metalico a capturar por dia, en mg (t -> mg y fraccion de Li en el LCE)
+    const liDiarioMg = prodDia * 1e9 * FRACCION_LI_EN_LCE;
+
+    // Inventario de sorbente requerido: litio diario dividido por cuanto litio
+    // atrapa el sorbente por ciclo y cuantos ciclos procesa la planta al dia.
+    // Ya NO es un input manual -- se deriva de la produccion real de la planta.
+    const masaKg = liDiarioMg / (ciclosDia * capacidad * 1000);
+    const masaTon = masaKg / 1000;
 
     const recupInicial = 0.92;
     const ciclosTotales = ciclosDia * 365 * horizonte;
@@ -140,6 +174,7 @@
     const costoTotal = costoTotalSorb + valorLitioPerdido;
     const costoPorTon = costoTotal / prodReal;
 
+    document.getElementById('r-masa').textContent = fmt.format(Math.round(masaTon));
     document.getElementById('r-vida').textContent = vidaMeses.toFixed(1).replace('.', ',');
     document.getElementById('r-reemplazos').textContent = numReemplazos;
     document.getElementById('r-recup').textContent = (recupProm*100).toFixed(0) + '%';
