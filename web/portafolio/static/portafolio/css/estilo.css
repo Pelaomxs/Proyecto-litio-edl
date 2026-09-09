@@ -24,7 +24,7 @@ body {
 .volver-link { display: inline-block; font-size: 13px; color: #0F6E56; font-weight: 600; text-decoration: none; margin-bottom: 16px; }
 .volver-link:hover { text-decoration: underline; }
 
-/* ── Header comun ───────────────────────────────────────── */
+/* ── Header común ───────────────────────────────────────── */
 header.page-header { margin-bottom: 28px; border-bottom: 3px solid #1D9E75; padding-bottom: 16px; }
 header.page-header h1 { font-size: 26px; color: #0F6E56; font-weight: 700; margin-bottom: 4px; }
 header.page-header .subtitle { font-size: 14px; color: #5F5E5A; }
@@ -72,7 +72,7 @@ input[type=range]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 
 
 footer.site-footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid #E0DED6; font-size: 11px; color: #888780; text-align: center; }
 
-/* ── Home: hero + galeria de diapositivas ───────────────── */
+/* ── Home: hero + galería de diapositivas ───────────────── */
 .hero { text-align: center; padding: 40px 16px 24px; }
 .hero h1 { font-size: 32px; color: #0F6E56; font-weight: 800; margin-bottom: 10px; }
 .hero p { font-size: 16px; color: #5F5E5A; max-width: 640px; margin: 0 auto; }
@@ -92,7 +92,7 @@ footer.site-footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid 
 .calc-card p { font-size: 13px; color: #5F5E5A; }
 .calc-card .arrow { color: #1D9E75; font-weight: 700; margin-top: 12px; display: inline-block; }
 
-/* ── Contenido tecnico/ambiental con fotos ──────────────── */
+/* ── Contenido técnico/ambiental con fotos ──────────────── */
 .section-title { font-size: 20px; color: #0F6E56; font-weight: 700; margin: 40px 0 16px; }
 .content-block { display: flex; gap: 24px; align-items: center; }
 .content-block.reverse { flex-direction: row-reverse; }
@@ -113,7 +113,7 @@ footer.site-footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid 
 .mitigacion-card ul { padding-left: 18px; font-size: 14px; color: #2C2C2A; }
 .mitigacion-card li { margin-bottom: 7px; }
 
-/* ── Metodologia (dl/dt/dd) en las paginas de calculo ───── */
+/* ── Metodología (dl/dt/dd) en las páginas de cálculo ───── */
 .metodologia > p { font-size: 14px; color: #3F3E3B; margin-bottom: 16px; }
 .metodologia dl { margin-bottom: 4px; }
 .metodologia dt { font-size: 14px; font-weight: 700; color: #0F6E56; margin-top: 16px; font-family: monospace, monospace; }

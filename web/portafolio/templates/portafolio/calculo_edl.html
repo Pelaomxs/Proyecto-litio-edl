@@ -1,17 +1,17 @@
 {% extends "portafolio/base.html" %}
-{% block titulo %}Calculadora EDL vs Evaporacion{% endblock %}
+{% block titulo %}Calculadora EDL vs Evaporación{% endblock %}
 {% block contenido %}
   <a href="{% url 'portafolio:home' %}" class="volver-link">&larr; Volver al inicio</a>
   <header class="page-header">
-    <h1>Calculadora de Extraccion Directa de Litio (EDL)</h1>
-    <p class="subtitle">Analisis de sensibilidad del impacto economico y ambiental vs evaporacion tradicional</p>
+    <h1>Calculadora de Extracción Directa de Litio (EDL)</h1>
+    <p class="subtitle">Análisis de sensibilidad del impacto económico y ambiental vs evaporación tradicional</p>
   </header>
 
   <div class="grid-2">
     <div class="card">
       <p class="section-label">Variables del proyecto</p>
       <div class="ctrl">
-        <div class="ctrl-row"><span class="ctrl-label">Produccion anual (t LCE)</span><span class="ctrl-val" id="prod-val">20.000</span></div>
+        <div class="ctrl-row"><span class="ctrl-label">Producción anual (t LCE)</span><span class="ctrl-val" id="prod-val">20.000</span></div>
         <input type="range" id="prod" min="5000" max="50000" step="1000" value="20000">
       </div>
       <div class="ctrl">
@@ -19,52 +19,52 @@
         <input type="range" id="precio" min="8000" max="30000" step="500" value="12000">
       </div>
       <div class="ctrl">
-        <div class="ctrl-row"><span class="ctrl-label">Recuperacion EDL (%)</span><span class="ctrl-val" id="recedl-val">92%</span></div>
+        <div class="ctrl-row"><span class="ctrl-label">Recuperación EDL (%)</span><span class="ctrl-val" id="recedl-val">92%</span></div>
         <input type="range" id="recedl" min="75" max="95" step="1" value="92">
       </div>
       <div class="ctrl">
-        <div class="ctrl-row"><span class="ctrl-label">Recuperacion evaporacion (%)</span><span class="ctrl-val" id="recevap-val">43%</span></div>
+        <div class="ctrl-row"><span class="ctrl-label">Recuperación evaporación (%)</span><span class="ctrl-val" id="recevap-val">43%</span></div>
         <input type="range" id="recevap" min="30" max="55" step="1" value="43">
       </div>
     </div>
 
     <div class="card">
-      <p class="section-label">Resultado economico</p>
+      <p class="section-label">Resultado económico</p>
       <div class="result-grid">
         <div class="metric highlight">
-          <div class="metric-label">Ingreso adicional/ano</div>
+          <div class="metric-label">Ingreso adicional/año</div>
           <div class="metric-value" id="r-ingreso">$129M</div>
-          <div class="metric-sub">vs evaporacion</div>
+          <div class="metric-sub">vs evaporación</div>
         </div>
         <div class="metric">
           <div class="metric-label">Litio extra capturado</div>
           <div class="metric-value" id="r-litio">10.739</div>
-          <div class="metric-sub">t LCE/ano</div>
+          <div class="metric-sub">t LCE/año</div>
         </div>
       </div>
       <div class="bar-item">
-        <div class="bar-head"><span>Produccion con EDL</span><span id="b-edl-val">20.000 t</span></div>
+        <div class="bar-head"><span>Producción con EDL</span><span id="b-edl-val">20.000 t</span></div>
         <div class="bar-track"><div class="bar-fill" id="b-edl" style="width:100%; background:#1D9E75; color:#04342C;">EDL</div></div>
       </div>
       <div class="bar-item">
-        <div class="bar-head"><span>Equivalente evaporacion</span><span id="b-evap-val">9.261 t</span></div>
+        <div class="bar-head"><span>Equivalente evaporación</span><span id="b-evap-val">9.261 t</span></div>
         <div class="bar-track"><div class="bar-fill" id="b-evap" style="width:46%; background:#B4B2A9; color:#2C2C2A;">Evap.</div></div>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <p class="section-label">Indicadores ambientales (mismo nivel de produccion)</p>
+    <p class="section-label">Indicadores ambientales (mismo nivel de producción)</p>
     <div class="env-grid">
       <div class="metric">
-        <div class="metric-label">Agua ahorrada/ano</div>
+        <div class="metric-label">Agua ahorrada/año</div>
         <div class="metric-value" id="r-agua">32M</div>
-        <div class="metric-sub">m3 vs evaporacion</div>
+        <div class="metric-sub">m3 vs evaporación</div>
       </div>
       <div class="metric">
         <div class="metric-label">Equivale a</div>
         <div class="metric-value" id="r-piscinas">12.900</div>
-        <div class="metric-sub">piscinas olimpicas</div>
+        <div class="metric-sub">piscinas olímpicas</div>
       </div>
       <div class="metric">
         <div class="metric-label">Superficie usada</div>
@@ -73,57 +73,57 @@
       </div>
     </div>
     <div class="note">
-      <strong>Nota metodologica:</strong> El ingreso adicional refleja la ventaja bruta por mayor recuperacion del mismo recurso de salmuera. No incluye costos de capital (CAPEX) de la planta EDL ni costos operacionales (OPEX), que corresponden a un nivel mas profundo de analisis. Datos de recuperacion y agua basados en pruebas de ENAMI en Salares Altoandinos (2024-2025).
+      <strong>Nota metodológica:</strong> El ingreso adicional refleja la ventaja bruta por mayor recuperación del mismo recurso de salmuera. No incluye costos de capital (CAPEX) de la planta EDL ni costos operacionales (OPEX), que corresponden a un nivel más profundo de análisis. Datos de recuperación y agua basados en pruebas de ENAMI en Salares Altoandinos (2024-2025).
     </div>
   </div>
 
-  <h2 class="section-title">Metodologia: de donde sale cada numero</h2>
+  <h2 class="section-title">Metodología: de dónde sale cada número</h2>
   <div class="card metodologia">
     <p>
-      El objetivo de esta calculadora es cuantificar, con supuestos explicitos y ajustables, la ventaja
-      economica y ambiental de reemplazar la evaporacion tradicional por EDL sobre el mismo recurso de
-      salmuera — el tipo de analisis que deberia respaldar cualquier decision de invertir en una u otra
-      tecnologia.
+      El objetivo de esta calculadora es cuantificar, con supuestos explícitos y ajustables, la ventaja
+      económica y ambiental de reemplazar la evaporación tradicional por EDL sobre el mismo recurso de
+      salmuera — el tipo de análisis que debería respaldar cualquier decisión de invertir en una u otra
+      tecnología.
     </p>
     <dl>
-      <dt>Produccion anual y precio del litio</dt>
-      <dd>Son los dos supuestos de escala del proyecto: cuanto litio carbonato equivalente (LCE) produce
-        la planta al ano y a que precio se vende. Ambos son ajustables porque varian mucho segun el
+      <dt>Producción anual y precio del litio</dt>
+      <dd>Son los dos supuestos de escala del proyecto: cuánto litio carbonato equivalente (LCE) produce
+        la planta al año y a qué precio se vende. Ambos son ajustables porque varían mucho según el
         proyecto y el ciclo de precios del mercado.</dd>
 
-      <dt>Recuperacion EDL (92% por defecto) y Recuperacion evaporacion (43%)</dt>
+      <dt>Recuperación EDL (92% por defecto) y Recuperación evaporación (43%)</dt>
       <dd>Porcentaje del litio disuelto en la salmuera que efectivamente se logra extraer con cada
-        tecnologia. Los valores por defecto se basan en pruebas de ENAMI en Salares Altoandinos
-        (2024-2025); en la practica dependen de la quimica especifica de cada salmuera.</dd>
+        tecnología. Los valores por defecto se basan en pruebas de ENAMI en Salares Altoandinos
+        (2024-2025); en la práctica dependen de la química específica de cada salmuera.</dd>
 
-      <dt>Litio equivalente evaporacion = Produccion &times; (Recuperacion evaporacion / Recuperacion EDL)</dt>
-      <dd>Pregunta que responde: si se procesara la <em>misma</em> salmuera con evaporacion en vez de
-        EDL, cuanto litio se recuperaria en realidad, dado que la evaporacion pierde mas litio en el
-        camino. Es el punto de comparacion justo -- mismo recurso, distinta eficiencia.</dd>
+      <dt>Litio equivalente evaporación = Producción &times; (Recuperación evaporación / Recuperación EDL)</dt>
+      <dd>Pregunta que responde: si se procesara la <em>misma</em> salmuera con evaporación en vez de
+        EDL, cuánto litio se recuperaría en realidad, dado que la evaporación pierde más litio en el
+        camino. Es el punto de comparación justo -- mismo recurso, distinta eficiencia.</dd>
 
-      <dt>Litio adicional capturado = Produccion &minus; Litio equivalente evaporacion</dt>
+      <dt>Litio adicional capturado = Producción &minus; Litio equivalente evaporación</dt>
       <dd>El litio extra que la EDL logra capturar del mismo volumen de salmuera, solo por tener mayor
-        recuperacion.</dd>
+        recuperación.</dd>
 
-      <dt>Ingreso adicional/ano = Litio adicional &times; Precio del litio</dt>
-      <dd>Valor economico de ese litio extra. <strong>No</strong> incluye CAPEX de la planta EDL ni
-        costos operacionales (OPEX) -- es la ventaja bruta por recuperacion, no una evaluacion de
+      <dt>Ingreso adicional/año = Litio adicional &times; Precio del litio</dt>
+      <dd>Valor económico de ese litio extra. <strong>No</strong> incluye CAPEX de la planta EDL ni
+        costos operacionales (OPEX) -- es la ventaja bruta por recuperación, no una evaluación de
         proyecto completa.</dd>
 
-      <dt>Agua ahorrada/ano</dt>
+      <dt>Agua ahorrada/año</dt>
       <dd>Se calcula con dos constantes de consumo de agua por tonelada de LCE (1.650 m&sup3;/t en
-        evaporacion vs 36 m&sup3;/t en EDL, tambien de pruebas ENAMI), multiplicadas por la produccion
-        anual y restadas entre si.</dd>
+        evaporación vs 36 m&sup3;/t en EDL, también de pruebas ENAMI), multiplicadas por la producción
+        anual y restadas entre sí.</dd>
 
-      <dt>Piscinas olimpicas</dt>
-      <dd>Conversion de escala: el agua ahorrada dividida por 2.500 m&sup3;, el volumen estandar de una
-        piscina olimpica -- solo para que la cifra sea mas facil de dimensionar.</dd>
+      <dt>Piscinas olímpicas</dt>
+      <dd>Conversión de escala: el agua ahorrada dividida por 2.500 m&sup3;, el volumen estándar de una
+        piscina olímpica -- solo para que la cifra sea más fácil de dimensionar.</dd>
     </dl>
     <div class="note">
-      <strong>Por que calculamos esto:</strong> en due diligence de proyectos de litio, la comparacion
-      que casi nunca se hace explicita es "mismo recurso, distinta tecnologia, distinto resultado". Este
-      modelo aisla esa diferencia para que se pueda argumentar con numeros, no solo con la promesa
-      generica de que "la EDL es mejor".
+      <strong>Por qué calculamos esto:</strong> en due diligence de proyectos de litio, la comparación
+      que casi nunca se hace explícita es "mismo recurso, distinta tecnología, distinto resultado". Este
+      modelo aísla esa diferencia para que se pueda argumentar con números, no solo con la promesa
+      genérica de que "la EDL es mejor".
     </div>
   </div>
 

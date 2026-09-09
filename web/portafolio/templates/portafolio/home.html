@@ -3,11 +3,11 @@
 {% block titulo %}Portafolio EDL — Contexto{% endblock %}
 {% block contenido %}
   <div class="hero">
-    <h1>Portafolio Extraccion Directa de Litio (EDL)</h1>
+    <h1>Portafolio Extracción Directa de Litio (EDL)</h1>
     <p>
-      Herramienta de due diligence que cuantifica el costo oculto de la degradacion del sorbente en EDL,
-      exponiendo la brecha entre la recuperacion nominal de los proveedores y el costo real de propiedad —
-      ademas de un modelo de sensibilidad para comparar EDL contra evaporacion tradicional.
+      Herramienta de due diligence que cuantifica el costo oculto de la degradación del sorbente en EDL,
+      exponiendo la brecha entre la recuperación nominal de los proveedores y el costo real de propiedad —
+      además de un modelo de sensibilidad para comparar EDL contra evaporación tradicional.
     </p>
   </div>
 
@@ -21,103 +21,103 @@
     </div>
   </div>
 
-  <h2 class="section-title">¿Que es la Extraccion Directa de Litio?</h2>
+  <h2 class="section-title">¿Qué es la Extracción Directa de Litio?</h2>
   <div class="card content-block">
     <div class="content-photo">
-      <img src="{% static 'portafolio/fotos/piscinas-evaporacion.jpg' %}" alt="Piscinas de evaporacion en el Salar de Atacama vistas desde satelite">
-      <p class="credito">Piscinas de evaporacion, Salar de Atacama — NASA Earth Observatory / Landsat 8 (dominio publico)</p>
+      <img src="{% static 'portafolio/fotos/piscinas-evaporacion.jpg' %}" alt="Piscinas de evaporación en el Salar de Atacama vistas desde satélite">
+      <p class="credito">Piscinas de evaporación, Salar de Atacama — NASA Earth Observatory / Landsat 8 (dominio público)</p>
     </div>
     <div class="content-text">
       <p>
-        El litio se concentra en salmueras subterraneas que se bombean a la superficie. El metodo
+        El litio se concentra en salmueras subterráneas que se bombean a la superficie. El método
         <strong>tradicional</strong> evapora esa salmuera en piscinas gigantes durante 12 a 18 meses,
         usando el sol y el viento del desierto para concentrar el litio antes de precipitarlo como
         carbonato — el proceso que se ve en la foto.
       </p>
       <p>
-        La <strong>EDL</strong> reemplaza esas piscinas por un proceso quimico continuo: la salmuera
+        La <strong>EDL</strong> reemplaza esas piscinas por un proceso químico continuo: la salmuera
         pasa por un material llamado sorbente que captura selectivamente el litio en horas, no meses, y
-        la salmuera empobrecida puede reinyectarse al acuifero. Esto reduce drasticamente el tiempo de
-        proceso y la superficie ocupada, pero introduce nuevas variables de costo — como la degradacion
-        del sorbente que cuantifica el simulador mas abajo.
+        la salmuera empobrecida puede reinyectarse al acuífero. Esto reduce drásticamente el tiempo de
+        proceso y la superficie ocupada, pero introduce nuevas variables de costo — como la degradación
+        del sorbente que cuantifica el simulador más abajo.
       </p>
     </div>
   </div>
 
   <div class="card content-block reverse">
     <div class="content-photo">
-      <img src="{% static 'portafolio/fotos/sorbente-resina.jpg' %}" alt="Perlas de resina de intercambio ionico, el material usado como sorbente">
-      <p class="credito">Resina de intercambio ionico (ejemplo del tipo de material sorbente) — dominio publico</p>
+      <img src="{% static 'portafolio/fotos/sorbente-resina.jpg' %}" alt="Perlas de resina de intercambio iónico, el material usado como sorbente">
+      <p class="credito">Resina de intercambio iónico (ejemplo del tipo de material sorbente) — dominio público</p>
     </div>
     <div class="content-text">
       <p>
-        El <strong>sorbente</strong> es un material solido — un oxido de aluminio o una resina de
-        intercambio ionico como la de la foto — con una estructura porosa que "atrapa" selectivamente
-        los iones de litio cuando la salmuera pasa a traves de el, dejando pasar el resto de las sales
+        El <strong>sorbente</strong> es un material sólido — un óxido de aluminio o una resina de
+        intercambio iónico como la de la foto — con una estructura porosa que "atrapa" selectivamente
+        los iones de litio cuando la salmuera pasa a través de él, dejando pasar el resto de las sales
         (sodio, potasio, magnesio).
       </p>
       <p>
         Una vez saturado, el sorbente se lava con agua dulce para liberar el litio capturado en una
-        solucion concentrada, que luego se purifica y convierte en carbonato o hidroxido de litio. Ese
+        solución concentrada, que luego se purifica y convierte en carbonato o hidróxido de litio. Ese
         ciclo de carga y descarga se repite miles de veces, pero cada ciclo degrada un poco la capacidad
-        del sorbente — exactamente lo que mide el simulador de esta pagina.
+        del sorbente — exactamente lo que mide el simulador de esta página.
       </p>
     </div>
   </div>
 
   <div class="card">
-    <p class="section-label">Beneficios frente a la evaporacion tradicional</p>
+    <p class="section-label">Beneficios frente a la evaporación tradicional</p>
     <ul style="padding-left: 18px; font-size: 14px; color: #3F3E3B;">
-      <li>Recuperacion de litio muy superior: 85-95% vs 40-50% de la evaporacion.</li>
-      <li>Tiempo de proceso: horas o dias, en vez de 12 a 18 meses.</li>
+      <li>Recuperación de litio muy superior: 85-95% vs 40-50% de la evaporación.</li>
+      <li>Tiempo de proceso: horas o días, en vez de 12 a 18 meses.</li>
       <li>Hasta 100 veces menos superficie de terreno ocupada.</li>
-      <li>Menor huella hidrica por tonelada de litio producido (aunque no elimina el consumo de agua).</li>
-      <li>Permite reinyectar la salmuera empobrecida al acuifero en vez de dejarla evaporar.</li>
+      <li>Menor huella hídrica por tonelada de litio producido (aunque no elimina el consumo de agua).</li>
+      <li>Permite reinyectar la salmuera empobrecida al acuífero en vez de dejarla evaporar.</li>
     </ul>
   </div>
 
   <div class="card content-block">
     <div class="content-photo">
-      <img src="{% static 'portafolio/fotos/flamenco-salar.jpg' %}" alt="Flamenco andino alimentandose en el Salar de Atacama">
+      <img src="{% static 'portafolio/fotos/flamenco-salar.jpg' %}" alt="Flamenco andino alimentándose en el Salar de Atacama">
       <p class="credito">Flamenco andino, Salar de Atacama — Luca Galuzzi (CC BY-SA 2.5)</p>
     </div>
     <div class="content-text">
       <h3>Las contras: el agua y el ecosistema del salar</h3>
       <p>
-        Aunque la EDL consume menos agua dulce por tonelada que la evaporacion, sigue necesitando
-        extraer grandes volumenes de salmuera del acuifero en poco tiempo para alimentar un proceso
-        continuo. Los salares son sistemas hidrologicos fragiles donde la salmuera y las aguas
-        superficiales (vegas, lagunas) estan interconectadas: extraer salmuera muy rapido puede bajar
-        el nivel freatico y afectar esos humedales, de los que dependen especies como los flamencos
+        Aunque la EDL consume menos agua dulce por tonelada que la evaporación, sigue necesitando
+        extraer grandes volúmenes de salmuera del acuífero en poco tiempo para alimentar un proceso
+        continuo. Los salares son sistemas hidrológicos frágiles donde la salmuera y las aguas
+        superficiales (vegas, lagunas) están interconectadas: extraer salmuera muy rápido puede bajar
+        el nivel freático y afectar esos humedales, de los que dependen especies como los flamencos
         altoandinos de la foto.
       </p>
       <p>
-        Ademas, el proceso genera salmuera concentrada de descarte que hay que reinyectar con cuidado, y
-        el sorbente reemplazado periodicamente (el mismo que calcula el simulador) es un residuo solido
-        que tambien requiere manejo.
+        Además, el proceso genera salmuera concentrada de descarte que hay que reinyectar con cuidado, y
+        el sorbente reemplazado periódicamente (el mismo que calcula el simulador) es un residuo sólido
+        que también requiere manejo.
       </p>
     </div>
   </div>
 
   <div class="mitigacion-card">
-    <h3>Que se puede hacer para mitigar estos efectos</h3>
+    <h3>Qué se puede hacer para mitigar estos efectos</h3>
     <ul>
-      <li>Reinyeccion controlada de la salmuera empobrecida al acuifero, en vez de descartarla.</li>
-      <li>Monitoreo hidrologico en tiempo real (niveles freaticos, humedales, poblacion de flamencos) con limites de extraccion adaptativos, no fijos.</li>
-      <li>Estudios de balance hidrico independientes antes de escalar la produccion, no solo los del proveedor.</li>
-      <li>Ramp-up gradual de la extraccion, con puntos de control ambiental antes de cada aumento de capacidad.</li>
-      <li>Priorizar sorbentes de mayor vida util y menor consumo de agua dulce en el lavado, reduciendo a la vez costo e impacto.</li>
+      <li>Reinyección controlada de la salmuera empobrecida al acuífero, en vez de descartarla.</li>
+      <li>Monitoreo hidrológico en tiempo real (niveles freáticos, humedales, población de flamencos) con límites de extracción adaptativos, no fijos.</li>
+      <li>Estudios de balance hídrico independientes antes de escalar la producción, no solo los del proveedor.</li>
+      <li>Ramp-up gradual de la extracción, con puntos de control ambiental antes de cada aumento de capacidad.</li>
+      <li>Priorizar sorbentes de mayor vida útil y menor consumo de agua dulce en el lavado, reduciendo a la vez costo e impacto.</li>
     </ul>
   </div>
 
-  <h2 class="section-title">¿Donde funcionaria mejor la EDL? — Foco: Salar de Maricunga</h2>
+  <h2 class="section-title">¿Dónde funcionaría mejor la EDL? — Foco: Salar de Maricunga</h2>
   <div class="card">
     <p style="font-size:14px; color:#3F3E3B; margin-bottom: 8px;">
       No todos los salares son buenos candidatos para EDL. Los requisitos ideales son: una salmuera con
       alta ley de litio (para que el proceso sea rentable procesando menos volumen), un entorno con
-      escasez hidrica donde el costo de agua/terreno de la evaporacion tradicional sea mas dificil de
+      escasez hídrica donde el costo de agua/terreno de la evaporación tradicional sea más difícil de
       justificar, y un marco regulatorio claro para operar. El <strong>Salar de Maricunga</strong>, en la
-      Region de Atacama, cumple los tres.
+      Región de Atacama, cumple los tres.
     </p>
     <div class="stat-grid">
       <div class="metric highlight">
@@ -131,26 +131,26 @@
         <div class="metric-sub">tras el Salar de Atacama</div>
       </div>
       <div class="metric">
-        <div class="metric-label">Ubicacion</div>
+        <div class="metric-label">Ubicación</div>
         <div class="metric-value">3.760 msnm</div>
-        <div class="metric-sub">precordillera de Copiapo</div>
+        <div class="metric-sub">precordillera de Copiapó</div>
       </div>
       <div class="metric">
         <div class="metric-label">Meta con EDL</div>
-        <div class="metric-value">55.000 t/ano</div>
+        <div class="metric-value">55.000 t/año</div>
         <div class="metric-sub">LCE, fase 2 desde 2033</div>
       </div>
     </div>
 
     <p style="font-size:14px; color:#3F3E3B; margin: 16px 0 8px;">
-      En febrero de 2026 el gobierno firmo el Contrato Especial de Operacion de Litio (CEOL) de
-      Maricunga. Hoy compiten tres actores por desarrollarlo: <strong>Simco Lithium</strong> (mas de
-      3.000 ha, meta de 20.000-22.000 t/ano de hidroxido de litio), el <strong>Proyecto Blanco</strong>
+      En febrero de 2026 el gobierno firmó el Contrato Especial de Operación de Litio (CEOL) de
+      Maricunga. Hoy compiten tres actores por desarrollarlo: <strong>Simco Lithium</strong> (más de
+      3.000 ha, meta de 20.000-22.000 t/año de hidróxido de litio), el <strong>Proyecto Blanco</strong>
       de Minera Salar Blanco (Bearing Lithium 18%, Lithium Power International 51%, socio chileno 31% —
-      cerca de 20.000 t/ano de carbonato de litio mas 58.000 t/ano de cloruro de potasio, inversion
-      estimada de US$563 millones) y <strong>Codelco</strong>. El plan por fases contempla evaporacion
-      tradicional desde 2030 (15.000-20.000 t/ano LCE) y un salto a EDL desde 2033 para llegar a las
-      55.000 t/ano.
+      cerca de 20.000 t/año de carbonato de litio más 58.000 t/año de cloruro de potasio, inversión
+      estimada de US$563 millones) y <strong>Codelco</strong>. El plan por fases contempla evaporación
+      tradicional desde 2030 (15.000-20.000 t/año LCE) y un salto a EDL desde 2033 para llegar a las
+      55.000 t/año.
     </p>
 
     <table class="requisitos-tabla">
@@ -158,37 +158,37 @@
         <tr><th>Requisito ideal para EDL</th><th>Maricunga</th></tr>
       </thead>
       <tbody>
-        <tr><td>Ley de litio alta en la salmuera</td><td class="si">1.073 mg/L promedio — 2° mas alta del mundo</td></tr>
-        <tr><td>Escasez hidrica que penaliza la evaporacion</td><td class="si">Zona donde el agua ya es un recurso mas disputado que el litio</td></tr>
+        <tr><td>Ley de litio alta en la salmuera</td><td class="si">1.073 mg/L promedio — 2° más alta del mundo</td></tr>
+        <tr><td>Escasez hídrica que penaliza la evaporación</td><td class="si">Zona donde el agua ya es un recurso más disputado que el litio</td></tr>
         <tr><td>Marco regulatorio claro para operar</td><td class="si">CEOL firmado con el Estado (feb. 2026)</td></tr>
-        <tr><td>Roadmap de escalamiento a EDL definido</td><td class="si">Fase 2 (desde 2033) contempla EDL explicitamente</td></tr>
+        <tr><td>Roadmap de escalamiento a EDL definido</td><td class="si">Fase 2 (desde 2033) contempla EDL explícitamente</td></tr>
       </tbody>
     </table>
 
     <p style="font-size:13px; color:#5F5E5A; margin-top: 14px;">
-      Los supuestos de recuperacion y consumo de agua en las calculadoras de este sitio estan calibrados
-      con datos de la industria — ajusta la ley y la recuperacion para modelar un caso como el de
+      Los supuestos de recuperación y consumo de agua en las calculadoras de este sitio están calibrados
+      con datos de la industria — ajusta la ley y la recuperación para modelar un caso como el de
       Maricunga u otro salar.
     </p>
 
     <p class="fuentes">
       Fuentes: Revista Digital Minera REDIMIN, "Boric firma el CEOL de Maricunga" (feb. 2026) ·
-      CODELCO, "Maricunga tiene la segunda concentracion de litio conocida a nivel mundial" ·
-      SWI swissinfo.ch, "El salar de Maricunga: cuando el agua es mas valiosa que el litio" ·
+      CODELCO, "Maricunga tiene la segunda concentración de litio conocida a nivel mundial" ·
+      SWI swissinfo.ch, "El salar de Maricunga: cuando el agua es más valiosa que el litio" ·
       La Tercera Pulso, "Tres actores para un salar: la carrera por extraer litio de Maricunga".
     </p>
   </div>
 
   <div class="calc-cards">
     <a class="calc-card" href="{% url 'portafolio:calculo_edl' %}">
-      <h3>Calculadora EDL vs Evaporacion</h3>
-      <p>Analisis de sensibilidad del impacto economico y ambiental de EDL frente al metodo tradicional de evaporacion.</p>
-      <span class="arrow">Ir al calculo &rarr;</span>
+      <h3>Calculadora EDL vs Evaporación</h3>
+      <p>Análisis de sensibilidad del impacto económico y ambiental de EDL frente al método tradicional de evaporación.</p>
+      <span class="arrow">Ir al cálculo &rarr;</span>
     </a>
     <a class="calc-card" href="{% url 'portafolio:calculo_sorbente' %}">
-      <h3>Simulador de Degradacion del Sorbente</h3>
-      <p>El costo real oculto que el vendedor no muestra: reemplazos de sorbente y litio perdido por degradacion.</p>
-      <span class="arrow">Ir al calculo &rarr;</span>
+      <h3>Simulador de Degradación del Sorbente</h3>
+      <p>El costo real oculto que el vendedor no muestra: reemplazos de sorbente y litio perdido por degradación.</p>
+      <span class="arrow">Ir al cálculo &rarr;</span>
     </a>
   </div>
 

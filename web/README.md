@@ -1,9 +1,9 @@
-# Portafolio EDL — version web (Django)
+# Portafolio EDL — versión web (Django)
 
-Sitio web para el Portafolio de Extraccion Directa de Litio (EDL): muestra las diapositivas de contexto
+Sitio web para el Portafolio de Extracción Directa de Litio (EDL): muestra las diapositivas de contexto
 del proyecto y luego las dos calculadoras interactivas ya validadas
 ([Calculadora_EDL.html](../Calculadora_EDL.html) y
-[Simulador_Sorbente_EDL.html](../Simulador_Sorbente_EDL.html)), portadas a un layout comun. No tiene
+[Simulador_Sorbente_EDL.html](../Simulador_Sorbente_EDL.html)), portadas a un layout común. No tiene
 base de datos, login ni formularios — es un sitio de solo lectura pensado para compartir con un link.
 
 ## Correr en local
@@ -16,17 +16,17 @@ python manage.py runserver
 
 Abre `http://127.0.0.1:8000/`.
 
-## Paginas
+## Páginas
 
-- `/` — contexto del proyecto y galeria de las diapositivas del PPT (`Presentacion_EDL_Completa_Ricardo.pptx`,
+- `/` — contexto del proyecto y galería de las diapositivas del PPT (`Presentacion_EDL_Completa_Ricardo.pptx`,
   exportadas como PNG en `portafolio/static/portafolio/slides/`).
-- `/calculo/edl-vs-evaporacion/` — comparacion economica y ambiental EDL vs evaporacion.
-- `/calculo/sorbente/` — costo real oculto por degradacion del sorbente.
+- `/calculo/edl-vs-evaporacion/` — comparación económica y ambiental EDL vs evaporación.
+- `/calculo/sorbente/` — costo real oculto por degradación del sorbente.
 
-## Regenerar las imagenes de las diapositivas
+## Regenerar las imágenes de las diapositivas
 
-Si el PPT cambia, hay que re-exportar las diapositivas (requiere Windows + PowerPoint instalado, via
-automatizacion COM con `pywin32`):
+Si el PPT cambia, hay que re-exportar las diapositivas (requiere Windows + PowerPoint instalado, vía
+automatización COM con `pywin32`):
 
 ```python
 import win32com.client
@@ -43,12 +43,12 @@ powerpoint.Quit()
 Proyecto **portafolio-edl** (servicio `web`), desplegado con `railway up` directo desde esta carpeta.
 
 - **URL**: https://web-production-9660d.up.railway.app
-- Publico, sin login — pensado para compartir el link directamente.
+- Público, sin login — pensado para compartir el link directamente.
 
 Variables configuradas en Railway: `SECRET_KEY`, `DEBUG=False` (ver `.env.example`). No hace falta
 `DJANGO_SUPERUSER_*` ni base de datos — este sitio no los usa.
 
-### Como volver a desplegar despues de un cambio
+### Cómo volver a desplegar después de un cambio
 
 ```bash
 cd web
