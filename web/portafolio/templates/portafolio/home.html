@@ -21,6 +21,95 @@
     </div>
   </div>
 
+  <h2 class="section-title">¿Que es la Extraccion Directa de Litio?</h2>
+  <div class="card content-block">
+    <div class="content-photo">
+      <img src="{% static 'portafolio/fotos/piscinas-evaporacion.jpg' %}" alt="Piscinas de evaporacion en el Salar de Atacama vistas desde satelite">
+      <p class="credito">Piscinas de evaporacion, Salar de Atacama — NASA Earth Observatory / Landsat 8 (dominio publico)</p>
+    </div>
+    <div class="content-text">
+      <p>
+        El litio se concentra en salmueras subterraneas que se bombean a la superficie. El metodo
+        <strong>tradicional</strong> evapora esa salmuera en piscinas gigantes durante 12 a 18 meses,
+        usando el sol y el viento del desierto para concentrar el litio antes de precipitarlo como
+        carbonato — el proceso que se ve en la foto.
+      </p>
+      <p>
+        La <strong>EDL</strong> reemplaza esas piscinas por un proceso quimico continuo: la salmuera
+        pasa por un material llamado sorbente que captura selectivamente el litio en horas, no meses, y
+        la salmuera empobrecida puede reinyectarse al acuifero. Esto reduce drasticamente el tiempo de
+        proceso y la superficie ocupada, pero introduce nuevas variables de costo — como la degradacion
+        del sorbente que cuantifica el simulador mas abajo.
+      </p>
+    </div>
+  </div>
+
+  <div class="card content-block reverse">
+    <div class="content-photo">
+      <img src="{% static 'portafolio/fotos/sorbente-resina.jpg' %}" alt="Perlas de resina de intercambio ionico, el material usado como sorbente">
+      <p class="credito">Resina de intercambio ionico (ejemplo del tipo de material sorbente) — dominio publico</p>
+    </div>
+    <div class="content-text">
+      <p>
+        El <strong>sorbente</strong> es un material solido — un oxido de aluminio o una resina de
+        intercambio ionico como la de la foto — con una estructura porosa que "atrapa" selectivamente
+        los iones de litio cuando la salmuera pasa a traves de el, dejando pasar el resto de las sales
+        (sodio, potasio, magnesio).
+      </p>
+      <p>
+        Una vez saturado, el sorbente se lava con agua dulce para liberar el litio capturado en una
+        solucion concentrada, que luego se purifica y convierte en carbonato o hidroxido de litio. Ese
+        ciclo de carga y descarga se repite miles de veces, pero cada ciclo degrada un poco la capacidad
+        del sorbente — exactamente lo que mide el simulador de esta pagina.
+      </p>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="section-label">Beneficios frente a la evaporacion tradicional</p>
+    <ul style="padding-left: 18px; font-size: 14px; color: #3F3E3B;">
+      <li>Recuperacion de litio muy superior: 85-95% vs 40-50% de la evaporacion.</li>
+      <li>Tiempo de proceso: horas o dias, en vez de 12 a 18 meses.</li>
+      <li>Hasta 100 veces menos superficie de terreno ocupada.</li>
+      <li>Menor huella hidrica por tonelada de litio producido (aunque no elimina el consumo de agua).</li>
+      <li>Permite reinyectar la salmuera empobrecida al acuifero en vez de dejarla evaporar.</li>
+    </ul>
+  </div>
+
+  <div class="card content-block">
+    <div class="content-photo">
+      <img src="{% static 'portafolio/fotos/flamenco-salar.jpg' %}" alt="Flamenco andino alimentandose en el Salar de Atacama">
+      <p class="credito">Flamenco andino, Salar de Atacama — Luca Galuzzi (CC BY-SA 2.5)</p>
+    </div>
+    <div class="content-text">
+      <h3>Las contras: el agua y el ecosistema del salar</h3>
+      <p>
+        Aunque la EDL consume menos agua dulce por tonelada que la evaporacion, sigue necesitando
+        extraer grandes volumenes de salmuera del acuifero en poco tiempo para alimentar un proceso
+        continuo. Los salares son sistemas hidrologicos fragiles donde la salmuera y las aguas
+        superficiales (vegas, lagunas) estan interconectadas: extraer salmuera muy rapido puede bajar
+        el nivel freatico y afectar esos humedales, de los que dependen especies como los flamencos
+        altoandinos de la foto.
+      </p>
+      <p>
+        Ademas, el proceso genera salmuera concentrada de descarte que hay que reinyectar con cuidado, y
+        el sorbente reemplazado periodicamente (el mismo que calcula el simulador) es un residuo solido
+        que tambien requiere manejo.
+      </p>
+    </div>
+  </div>
+
+  <div class="mitigacion-card">
+    <h3>Que se puede hacer para mitigar estos efectos</h3>
+    <ul>
+      <li>Reinyeccion controlada de la salmuera empobrecida al acuifero, en vez de descartarla.</li>
+      <li>Monitoreo hidrologico en tiempo real (niveles freaticos, humedales, poblacion de flamencos) con limites de extraccion adaptativos, no fijos.</li>
+      <li>Estudios de balance hidrico independientes antes de escalar la produccion, no solo los del proveedor.</li>
+      <li>Ramp-up gradual de la extraccion, con puntos de control ambiental antes de cada aumento de capacidad.</li>
+      <li>Priorizar sorbentes de mayor vida util y menor consumo de agua dulce en el lavado, reduciendo a la vez costo e impacto.</li>
+    </ul>
+  </div>
+
   <div class="calc-cards">
     <a class="calc-card" href="{% url 'portafolio:calculo_edl' %}">
       <h3>Calculadora EDL vs Evaporacion</h3>
