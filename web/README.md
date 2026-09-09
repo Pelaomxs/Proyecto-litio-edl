@@ -38,17 +38,22 @@ presentation.Close()
 powerpoint.Quit()
 ```
 
-## Desplegar en Railway
+## Desplegado en Railway
 
-Mismo flujo que el proyecto de mantencion minera:
+Proyecto **portafolio-edl** (servicio `web`), desplegado con `railway up` directo desde esta carpeta.
+
+- **URL**: https://web-production-9660d.up.railway.app
+- Publico, sin login — pensado para compartir el link directamente.
+
+Variables configuradas en Railway: `SECRET_KEY`, `DEBUG=False` (ver `.env.example`). No hace falta
+`DJANGO_SUPERUSER_*` ni base de datos — este sitio no los usa.
+
+### Como volver a desplegar despues de un cambio
 
 ```bash
 cd web
-railway init                              # o railway link si ya existe el proyecto
-railway add --service web
-railway variables --set "SECRET_KEY=..." --set "DEBUG=False" --service web
 railway up --service web --detach
-railway domain --service web
 ```
 
-No hace falta configurar `DJANGO_SUPERUSER_*` ni base de datos — este sitio no los usa.
+Logs: `railway logs --service web` (agrega `--build` para el build). Variables:
+`railway variables --service web`.
